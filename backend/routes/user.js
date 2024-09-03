@@ -8,7 +8,7 @@ const authUser = require("../middleware/auth");
 
 const JWT_SECRET_TOKEN = "fh?P26#sU:NP5s4";
 
-//ROUTE 1  :   Create User
+//ROUTE 1  :   Create User  using  {ip}:8080/api/user/createUser
 router.post(
   "/createUser",
   [
@@ -43,7 +43,7 @@ router.post(
   }
 );
 
-//ROUTE 2  :  Authenticate User
+//ROUTE 2  :  Authenticate User using {ip}:8080/api/user/login
 router.post(
   "/login",
   [
@@ -83,7 +83,7 @@ router.post(
   }
 );
 
-//ROUTE 2  :  Get User details
+//ROUTE 3  :  Get User details using {ip}:8080/api/user/getuser
 router.post("/getuser", authUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
