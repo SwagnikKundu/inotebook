@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoURI = "mongodb://localhost:27017/noteRush";
+const mongoURI = "mongodb://localhost:27017/nodeRush";
 
 const connectToMongoDb = () => {
   mongoose

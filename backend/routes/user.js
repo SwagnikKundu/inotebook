@@ -73,7 +73,7 @@ router.post(
       const authToken = jwt.sign(payLoad, JWT_SECRET_TOKEN);
       res
         .status(200)
-        .json({ msg: "User login successfully", token: authToken });
+        .json({ msg: "User login successfully",user: user.name, token: authToken });
     } catch (error) {
       console.log(error.message);
       res

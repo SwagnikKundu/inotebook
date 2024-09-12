@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar(props) {
+  const logout = () => {
+    localStorage.clear();
+  };
+
+  let location = useLocation();
   return (
-    <nav
-      className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
-    >
+    <nav className={`navbar navbar-expand-lg  fixed-top navbar-dark bg-dark`}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           {props.title}
@@ -25,37 +28,43 @@ export default function Navbar(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/" ? "active" : ""
+                }`}
+                to="/"
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
+                to="/about"
+              >
                 About
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/user">
-                User
-              </Link>
-            </li>
           </ul>
-          <div
-            className={`form-check form-switch text-${
-              props.mode === "light" ? "dark" : "light"
-            }`}
-          >
-            <input
-              className="form-check-input"
-              type="checkbox"
-              role="switch"
-              id="toggleMode"
-              onClick={props.toggleMode}
-            />
-            <label className="form-check-label" htmlFor="toggleMode">
-              Enable {props.mode === "light" ? "Dark" : "Light"} Mode
-            </label>
-          </div>
+          <form className="d-flex">
+            {localStorage.getItem("user") && (
+              <>
+               
+                  <span className="text-light m-auto mr-3">
+                    Hello, {localStorage.getItem("user")}
+                  </span>
+                
+                <button
+                  className="btn btn-outline-secondary mx-2"
+                  onClick={logout}
+                >
+                  Log Out
+                </button>
+              </>
+            )}
+          </form>
         </div>
       </div>
     </nav>
