@@ -11,13 +11,14 @@ export default function AddNote(props) {
     description: "",
   });
 
-  const handleAddNote = async(e) => {
+  const handleAddNote = async (e) => {
     e.preventDefault();
     const json = await addNote(note.title, note.description, note.tags);
-    if(json.error)
-      props.showAlert(json.msg,'danger');
-    props.showAlert(json.msg,'success');
-
+    if (json.error) props.showAlert(json.msg, "danger");
+    else {
+      props.showAlert(json.msg, "success");
+      setNote({ title: "", tags: "General", description: "" });
+    }
   };
 
   const onChange = (e) => {
@@ -40,6 +41,7 @@ export default function AddNote(props) {
               minLength={3}
               onChange={onChange}
               required
+              value={note.title}
             />
           </div>
           <div className="form-group mt-3">
@@ -49,7 +51,7 @@ export default function AddNote(props) {
               id="tags"
               name="tags"
               onChange={onChange}
-              value={"General"}
+              value={note.tags}
             >
               <option value="General">General</option>
               <option value="Travel">Travel</option>
@@ -70,11 +72,12 @@ export default function AddNote(props) {
               minLength={3}
               onChange={onChange}
               name="description"
+              value={note.description}
               required
             />
           </div>
           <button
-            disabled={note.title.length < 5 || note.description.length<5}
+            disabled={note.title.length < 5 || note.description.length < 5}
             type="submit"
             className="btn btn-primary m-3"
             onClick={handleAddNote}
